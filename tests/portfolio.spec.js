@@ -31,7 +31,7 @@ test.describe('Single Page Portfolio', () => {
     await expect(serviceCards).toHaveCount(3);
 
     await expect(serviceCards.first()).toContainText('Auditoría UX & Discovery de Producto');
-    await expect(serviceCards.nth(1)).toContainText('Prototipado de Alta Precision');
+    await expect(serviceCards.nth(1)).toContainText('Prototipado de Alta Precisión');
   });
 
   test('Requirement: Cases Section Display - case studies ordered correctly', async ({ page }) => {
@@ -70,7 +70,9 @@ test.describe('Single Page Portfolio', () => {
 
     const servicesGrid = page.locator('.services__grid');
     const gridStyle = await servicesGrid.evaluate(el => getComputedStyle(el).gridTemplateColumns);
-    expect(gridStyle).toContain('1fr');
+    // Verificamos que se apile en una sola columna (un único valor, sin espacios que separen columnas extras)
+    const columnsCount = gridStyle.trim().split(/\s+/).length;
+    expect(columnsCount).toBe(1);
   });
 });
 
@@ -185,5 +187,45 @@ test.describe('Expandible Case Cards', () => {
 
     await trigger.press(' ');
     await expect(firstCard).not.toHaveAttribute('open');
+  });
+
+  // ===== Theme Toggle Spec Tests =====
+  test.describe('Theme Toggle (Light/Dark Mode)', () => {
+    test('Requirement: Boton Conmutador de Tema - alternar tema por interacción y validar localStorage', async ({ page }) => {
+      const toggleBtn = page.locator('#theme-toggle');
+      await expect(toggleBtn).toBeVisible();
+
+      // Obtener el tema inicial
+      const initialTheme = await page.locator('html').getAttribute('data-theme') || 'dark';
+      const expectedTheme = initialTheme === 'dark' ? 'light' : 'dark';
+
+      // Dar clic
+      await toggleBtn.click();
+      const currentTheme = await page.locator('html').getAttribute('data-theme');
+      expect(currentTheme).toBe(expectedTheme);
+
+      // Validar persistencia tras recarga
+      await page.reload();
+      const reloadedTheme = await page.locator('html').getAttribute('data-theme');
+      expect(reloadedTheme).toBe(expectedTheme);
+    });
+
+    test('Requirement: Soporte de Accesibilidad en Teclado - alternar tema con Enter y Espacio', async ({ page }) => {
+      const toggleBtn = page.locator('#theme-toggle');
+      await toggleBtn.focus();
+
+      const initialTheme = await page.locator('html').getAttribute('data-theme') || 'dark';
+      const nextTheme = initialTheme === 'dark' ? 'light' : 'dark';
+
+      // Presionar Enter
+      await toggleBtn.press('Enter');
+      let currentTheme = await page.locator('html').getAttribute('data-theme');
+      expect(currentTheme).toBe(nextTheme);
+
+      // Presionar Espacio
+      await toggleBtn.press(' ');
+      currentTheme = await page.locator('html').getAttribute('data-theme');
+      expect(currentTheme).toBe(initialTheme);
+    });
   });
 });

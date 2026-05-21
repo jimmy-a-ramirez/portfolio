@@ -81,3 +81,17 @@
   --shadow-subtle-6: rgba(216, 236, 248, 0.2) 0px 1px 1px 0px inset, rgba(168, 216, 245, 0.06) 0px 24px 48px 0px inset, rgba(0, 0, 0, 0.3) 0px 16px 32px 0px;
   --shadow-subtle-7: rgba(216, 236, 248, 0.2) 0px 1px 1px 0px inset, rgba(168, 216, 245, 0.06) 0px 24px 48px 0px inset;
 }
+
+[data-theme="light"] {
+  --color-midnight-abyss: #f5f7fb;
+  --color-ghost-white: #0c0d12;
+  --color-storm-gray: #e8eef7;
+  --color-comet: #333f51;
+  --color-arctic-mist: #1f2937;
+  --color-celestial-light: #111827;
+  --color-azure-glow: #2c3b52;
+  --color-slate-dew: #cbd5e1;
+  --color-whisper-blue: #4b5563;
+  --color-neon-violet: #0a84ff;
+  --color-interstellar-gray: #6b7280;
+}

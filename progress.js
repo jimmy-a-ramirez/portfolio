@@ -125,16 +125,76 @@
     }
   };
 
+  const Theme = {
+    toggleBtn: null,
+
+    init() {
+      this.toggleBtn = document.getElementById('theme-toggle');
+      if (!this.toggleBtn) return;
+
+      this.setupTheme();
+      this.setupEvents();
+    },
+
+    setupTheme() {
+      let currentTheme = document.documentElement.getAttribute('data-theme');
+      if (!currentTheme) {
+        currentTheme = localStorage.getItem('theme');
+        if (!currentTheme) {
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          currentTheme = prefersDark ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', currentTheme);
+      }
+      this.updateAccessibility(currentTheme);
+    },
+
+    setupEvents() {
+      this.toggleBtn.addEventListener('click', () => {
+        this.toggle();
+      });
+
+      this.toggleBtn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          this.toggle();
+        }
+      });
+    },
+
+    toggle() {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      this.updateAccessibility(next);
+    },
+
+    updateAccessibility(theme) {
+      this.toggleBtn.setAttribute('aria-label', `Alternar tema, tema actual es ${theme === 'dark' ? 'oscuro' : 'claro'}`);
+    }
+  };
+
   // Expose to window for testing environments
   if (typeof window !== 'undefined') {
     window.DotNav = DotNav;
     window.Accordion = Accordion;
     window.ScrollAnim = ScrollAnim;
+    window.Theme = Theme;
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => { DotNav.init(); Accordion.init(); ScrollAnim.init(); });
+    document.addEventListener('DOMContentLoaded', () => { 
+      DotNav.init(); 
+      Accordion.init(); 
+      ScrollAnim.init(); 
+      Theme.init(); 
+    });
   } else {
-    DotNav.init(); Accordion.init(); ScrollAnim.init();
+    DotNav.init(); 
+    Accordion.init(); 
+    ScrollAnim.init(); 
+    Theme.init();
   }
 })();
