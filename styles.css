@@ -52,6 +52,18 @@ body {
   top: var(--spacing-16);
 }
 
+/* ===== Focus States (Teclado y Accesibilidad AAA) ===== */
+:focus-visible {
+  outline: 2px solid var(--color-neon-violet);
+  outline-offset: 4px;
+  box-shadow: 0 0 14px rgba(10, 132, 255, 0.4);
+}
+
+/* Suprimir contorno rústico por defecto en clics de ratón normales */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
 /* ===== Dot Navigation ===== */
 .dot-nav {
   position: fixed;
@@ -986,10 +998,18 @@ body {
 .animate-stagger-3 { transition-delay: 300ms; }
 
 @media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
   .animate-on-scroll {
-    opacity: 1;
-    transform: none;
-    transition: none;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }
 

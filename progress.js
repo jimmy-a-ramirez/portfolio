@@ -37,9 +37,15 @@
 
     setActive(id) {
       this.dots.forEach(d => {
-        d.dataset.active = (d.dataset.section === id).toString();
+        const isActive = d.dataset.section === id;
+        d.dataset.active = isActive.toString();
         // Also set explicit attribute for tests checking getAttribute('data-active') or data-active in DOM
-        d.setAttribute('data-active', (d.dataset.section === id).toString());
+        d.setAttribute('data-active', isActive.toString());
+        if (isActive) {
+          d.setAttribute('aria-current', 'true');
+        } else {
+          d.removeAttribute('aria-current');
+        }
       });
     },
 
@@ -80,7 +86,11 @@
             trigger.setAttribute('role', 'button');
           }
 
+          // Inicializar aria-expanded basado en el atributo open de details
+          trigger.setAttribute('aria-expanded', card.hasAttribute('open') ? 'true' : 'false');
+
           trigger.addEventListener('click', () => {
+            // Collapse de otros acordeones
             if (!card.hasAttribute('open')) {
               cards.forEach(c => {
                 if (c !== card && c.hasAttribute('open')) {
@@ -88,6 +98,16 @@
                 }
               });
             }
+
+            // Sincronizar aria-expanded con delay síncrono para que se procese tras el toggle nativo
+            setTimeout(() => {
+              cards.forEach(c => {
+                const t = c.querySelector('.case-card__trigger');
+                if (t) {
+                  t.setAttribute('aria-expanded', c.hasAttribute('open') ? 'true' : 'false');
+                }
+              });
+            }, 0);
           });
         }
       });
