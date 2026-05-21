@@ -1286,17 +1286,19 @@ html[data-theme="light"] .cta .container {
 }
 
 /* Ajustes de Navegación Lateral (Dot Navigation) en Modo Claro */
-html[data-theme="light"] .dot-nav {
-  background: rgba(255, 255, 255, 0.85);
-  border-color: rgba(10, 132, 255, 0.15);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-}
-
 html[data-theme="light"] .dot-nav__tooltip {
   background: rgba(255, 255, 255, 0.96);
   color: var(--color-ghost-white);
   border-color: rgba(10, 132, 255, 0.2);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 1024px) {
+  html[data-theme="light"] .dot-nav {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: rgba(10, 132, 255, 0.15);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  }
 }
 
 /* Adaptación a móviles */
