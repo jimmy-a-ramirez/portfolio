@@ -49,9 +49,9 @@ test.describe('Single Page Portfolio', () => {
     const ctaTitle = page.locator('.cta__title');
     await expect(ctaTitle).toBeVisible();
 
-    const calendlyLink = page.locator('.cta__actions .btn--primary');
-    await expect(calendlyLink).toBeVisible();
-    await expect(calendlyLink).toHaveAttribute('href', /calendly\.com/);
+    const emailLink = page.locator('.cta__actions .btn--primary');
+    await expect(emailLink).toBeVisible();
+    await expect(emailLink).toHaveAttribute('href', /mailto:jialexisrojas@gmail\.com/);
 
     const linkedinLink = page.locator('.cta__linkedin');
     await expect(linkedinLink).toBeVisible();
