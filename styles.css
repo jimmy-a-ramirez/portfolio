@@ -1242,6 +1242,49 @@ html[data-theme="light"] .case-card__metrics li::before {
   background: rgba(10, 132, 255, 0.04);
 }
 
+/* Ajustes de Sombras para Cajas de Servicios, Testimonios y Contacto en Modo Claro */
+html[data-theme="light"] .service-card {
+  background: rgba(255, 255, 255, 0.55);
+  border-color: rgba(10, 132, 255, 0.14);
+  box-shadow: 
+    inset rgba(255, 255, 255, 0.8) 0px 1px 1px 0px,
+    rgba(0, 0, 0, 0.03) 0px 8px 24px 0px;
+}
+
+html[data-theme="light"] .service-card:hover {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(10, 132, 255, 0.35);
+  box-shadow: 
+    inset rgba(255, 255, 255, 0.9) 0px 1px 1px 0px,
+    0 12px 28px rgba(10, 132, 255, 0.05),
+    rgba(0, 0, 0, 0.05) 0px 16px 32px 0px;
+}
+
+html[data-theme="light"] .testimonial-card {
+  background: rgba(255, 255, 255, 0.55);
+  border-color: rgba(10, 132, 255, 0.14);
+  box-shadow: 
+    inset rgba(255, 255, 255, 0.8) 0px 1px 1px 0px,
+    rgba(0, 0, 0, 0.03) 0px 8px 24px 0px;
+}
+
+html[data-theme="light"] .testimonial-card:hover {
+  background: rgba(255, 255, 255, 0.80);
+  border-color: rgba(10, 132, 255, 0.35);
+  box-shadow: 
+    inset rgba(255, 255, 255, 0.9) 0px 1px 1px 0px,
+    0 12px 28px rgba(10, 132, 255, 0.05),
+    rgba(0, 0, 0, 0.05) 0px 16px 32px 0px;
+}
+
+html[data-theme="light"] .cta .container {
+  background: rgba(255, 255, 255, 0.65);
+  border-color: rgba(10, 132, 255, 0.15);
+  box-shadow: 
+    inset rgba(255, 255, 255, 0.85) 0px 1px 1px 0px,
+    rgba(0, 0, 0, 0.03) 0px 12px 32px 0px;
+}
+
 /* Adaptación a móviles */
 @media (max-width: 768px) {
   .theme-toggle-btn {
