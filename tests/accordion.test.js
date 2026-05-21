@@ -4,6 +4,7 @@
  */
 
 import { describe, it, expect, beforeEach } from 'vitest';
+import '../progress.js';
 
 describe('Accordion Behavior', () => {
   let caseCards;
@@ -26,6 +27,9 @@ describe('Accordion Behavior', () => {
         </details>
       </div>
     `;
+    if (window.Accordion) {
+      window.Accordion.init();
+    }
     caseCards = document.querySelectorAll('.case-card');
   });
 

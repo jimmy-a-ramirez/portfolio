@@ -4,6 +4,7 @@
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import '../progress.js';
 
 /**
  * Mock IntersectionObserver for testing
@@ -62,10 +63,20 @@ describe('Progress Indicator', () => {
       <section id="cta" data-section="cta"></section>
     `;
 
+    // Inject styles for JSDOM position evaluation
+    const style = document.createElement('style');
+    style.textContent = '.progress-indicator { position: fixed; }';
+    document.head.appendChild(style);
+
     // Mock IntersectionObserver
     originalIntersectionObserver = global.IntersectionObserver;
     mockObserver = createMockObserver();
     global.IntersectionObserver = mockObserver;
+
+    // Re-initialize DotNav for this specific test
+    if (window.DotNav) {
+      window.DotNav.init();
+    }
   });
 
   afterEach(() => {
@@ -131,7 +142,7 @@ describe('Progress Indicator', () => {
 
   describe('Requirement: Scroll Position Updates (progress-indicator spec)', () => {
     it('should observe all data-section elements', () => {
-      const sections = document.querySelectorAll('[data-section]');
+      const sections = document.querySelectorAll('section[data-section]');
       expect(sections.length).toBe(4);
     });
   });

@@ -31,7 +31,7 @@ describe('Smooth Scroll', () => {
       link.href = '#cta';
       document.body.appendChild(link);
 
-      expect(link.href).toBe('#cta');
+      expect(link.getAttribute('href')).toBe('#cta');
     });
 
     it('should have sections with IDs for targeting', () => {
@@ -45,7 +45,7 @@ describe('Smooth Scroll', () => {
     });
 
     it('should have data-section attributes for identification', () => {
-      const sections = document.querySelectorAll('[data-section]');
+      const sections = document.querySelectorAll('section[data-section]');
       expect(sections.length).toBe(3);
 
       const sectionNames = Array.from(sections).map(s => s.dataset.section);

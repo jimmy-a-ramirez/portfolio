@@ -30,7 +30,7 @@ test.describe('Single Page Portfolio', () => {
     const serviceCards = page.locator('.service-card');
     await expect(serviceCards).toHaveCount(3);
 
-    await expect(serviceCards.first()).toContainText('UX Audit & Product Discovery');
+    await expect(serviceCards.first()).toContainText('Auditoría UX & Discovery de Producto');
     await expect(serviceCards.nth(1)).toContainText('Prototipado de Alta Precision');
   });
 
