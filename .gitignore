@@ -4,3 +4,11 @@ test-results/
 .DS_Store
 Thumbs.db
 *.log
+
+# Herramientas de IA y Agentes Locales
+.agent/
+.agents/
+.antigravitycli/
+.atl/
+.opencode/
+openspec/
