@@ -149,6 +149,11 @@ body {
   justify-content: center;
 }
 
+.section .container {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 .section__tag {
   display: inline-flex;
   align-items: center;
