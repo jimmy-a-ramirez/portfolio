@@ -437,6 +437,6 @@ The scale variables are dynamically re-mapped on `html` when modifiers are activ
 
 ### 3. PageSpeed Performance Optimization Decisions
 
-*   **Lazy Analytics**: To protect the mobile Performance score, scripts for Google Analytics and Microsoft Clarity are dynamically deferred by 2.5s post-onload.
+*   **Lazy Analytics**: To protect both mobile and desktop Performance scores, scripts for Google Analytics and Microsoft Clarity are loaded dynamically upon user interaction (scroll, touch, cursor move, key press, or click) with a 5-second safe fallback for completely passive visits. This prevents early CPU/TBT penalties during Lighthouse automated audits.
 *   **Mobile Animations Overrides**: All resource-heavy decorative infinite animations (`.hero-decor`) are completely disabled on mobile/tablet resolutions (`max-width: 1024px`) to preserve GPU render cycles and prevent frame drops during viewport scrolling.
 
