@@ -1363,7 +1363,7 @@ html[data-theme="light"] .dot-nav__tooltip {
   max-width: calc(100vw - 48px);
   background: rgba(8, 9, 12, 0.88);
   border: 1px solid rgba(186, 215, 247, 0.16);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-3xl);
   padding: var(--spacing-20);
   z-index: 1001;
   box-shadow: 
@@ -1532,7 +1532,7 @@ html[data-theme="light"] .dot-nav__tooltip {
 }
 
 /* ===== Responsive Adaptations for A11y Panel ===== */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .a11y-trigger {
     top: var(--spacing-16);
     bottom: auto;
@@ -1548,6 +1548,7 @@ html[data-theme="light"] .dot-nav__tooltip {
     width: calc(100vw - 32px);
     max-width: none;
     padding: var(--spacing-16);
+    border-radius: var(--radius-3xl);
   }
 }
 
@@ -1612,7 +1613,7 @@ html.a11y-monochrome {
 html[data-theme="light"] .a11y-trigger {
   background: rgba(232, 238, 247, 0.85);
   border-color: rgba(10, 132, 255, 0.2);
-  color: var(--color-ghost-white);
+  color: #0c0d12;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
@@ -1622,8 +1623,9 @@ html[data-theme="light"] .a11y-trigger:hover {
 }
 
 html[data-theme="light"] .a11y-panel {
-  background: rgba(245, 247, 251, 0.92);
+  background: rgba(245, 247, 251, 0.94);
   border-color: rgba(10, 132, 255, 0.15);
+  border-radius: var(--radius-3xl);
   box-shadow: 
     0 20px 40px rgba(0, 0, 0, 0.08), 
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
@@ -1634,26 +1636,26 @@ html[data-theme="light"] .a11y-panel__header {
 }
 
 html[data-theme="light"] .a11y-panel__title {
-  color: var(--color-ghost-white);
+  color: #0c0d12 !important;
 }
 
 html[data-theme="light"] .a11y-option__label {
-  color: var(--color-comet);
+  color: #0f172a !important;
 }
 
 html[data-theme="light"] .a11y-option__description {
-  color: var(--color-whisper-blue);
+  color: #334155 !important;
 }
 
 html[data-theme="light"] .a11y-btn-group__btn {
   background: rgba(0, 0, 0, 0.03);
   border-color: rgba(0, 0, 0, 0.08);
-  color: var(--color-comet);
+  color: #1e293b !important;
 }
 
 html[data-theme="light"] .a11y-btn-group__btn:hover {
   background: rgba(0, 0, 0, 0.06);
-  color: var(--color-ghost-white);
+  color: #0c0d12 !important;
   border-color: rgba(10, 132, 255, 0.2);
 }
 
@@ -1680,7 +1682,7 @@ html[data-theme="light"] .a11y-switch__thumb {
 }
 
 html[data-theme="light"] .a11y-close {
-  color: var(--color-whisper-blue);
+  color: #334155 !important;
 }
 
 html[data-theme="light"] .a11y-close:hover {
