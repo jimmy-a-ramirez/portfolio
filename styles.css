@@ -1550,6 +1550,14 @@ html[data-theme="light"] .dot-nav__tooltip {
     padding: var(--spacing-16);
     border-radius: var(--radius-3xl);
   }
+
+  /* Optimización de PageSpeed: desactivar animaciones complejas en móvil/tablet para ahorrar ciclos CPU/GPU */
+  .hero-decor,
+  .hero-decor--1,
+  .hero-decor--2,
+  .hero-decor--3 {
+    animation: none !important;
+  }
 }
 
 /* ===== A11y Global Style Overrides (Modificadores de Accesibilidad) ===== */
