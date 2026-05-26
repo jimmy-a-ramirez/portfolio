@@ -414,3 +414,29 @@ The page uses a full-bleed dark background (`Midnight Abyss`) with content conta
   --shadow-subtle-7: rgba(216, 236, 248, 0.2) 0px 1px 1px 0px inset, rgba(168, 216, 245, 0.06) 0px 24px 48px 0px inset;
 }
 ```
+
+---
+
+## Accessibility & UX Preferences Design System
+
+Added in May 2026 to support WCAG 2.2 accessibility standards and customizable UX profiles.
+
+### 1. Typography Modifiers
+
+The scale variables are dynamically re-mapped on `html` when modifiers are active:
+
+*   **Large Text (`html.a11y-large-text`)**: Increases body and caption fonts by ~15% for readability.
+*   **Huge Text (`html.a11y-huge-text`)**: Increases body and caption fonts by ~30% for high legibility.
+*   **Readable Font (`html.a11y-readable-font`)**: Replaces high-geometry display fonts with system sans-serif fonts and forces a word-spacing boost of `0.08em` and letter-spacing of `0.04em` (conforming to **WCAG 1.4.12** cognitive spacing rules).
+
+### 2. Behavior and Color Modifiers
+
+*   **Keyboard Focus Highlight (`html.a11y-focus-highlights`)**: Emphasizes active focus states with a 4px custom glowing ring (`--color-neon-violet`) and an outline offset of 4px (**WCAG 2.4.7**).
+*   **Reduced Motion (`html.a11y-reduced-motion`)**: Enforces instantaneous values on all animations, transitions, and root-level scroll actions (`scroll-behavior: auto !important`). Used to mitigate vestibular disorders and epilepsy triggers.
+*   **Monochrome View (`html.a11y-monochrome`)**: Simplifies the visual interface by applying a full grayscale filter (`filter: grayscale(1) contrast(1.15)`) to eliminate color-contrast barriers for various forms of color blindness.
+
+### 3. PageSpeed Performance Optimization Decisions
+
+*   **Lazy Analytics**: To protect the mobile Performance score, scripts for Google Analytics and Microsoft Clarity are dynamically deferred by 2.5s post-onload.
+*   **Mobile Animations Overrides**: All resource-heavy decorative infinite animations (`.hero-decor`) are completely disabled on mobile/tablet resolutions (`max-width: 1024px`) to preserve GPU render cycles and prevent frame drops during viewport scrolling.
+
