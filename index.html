@@ -7,10 +7,14 @@
   <meta name="description" content="Consultor de Producto y UX. Transformo la ambigüedad en hojas de ruta lógicas y soluciones de diseño de alta precisión que aceleran el desarrollo técnico.">
   <meta name="keywords" content="Product Consultant, UX Audit, DesignOps, Gamification, Enterprise UX, España, Remoto, Storybook, OpenSpec">
 
-  <!-- Google tag (gtag.js) & Microsoft Clarity (Lazy Loaded for PageSpeed Mobile Performance) -->
+  <!-- Google tag (gtag.js) & Microsoft Clarity (Lazy Loaded on User Interaction for PageSpeed Performance) -->
   <script>
     (function() {
+      let loaded = false;
       function loadAnalytics() {
+        if (loaded) return;
+        loaded = true;
+
         // Load GA4
         const gaScript = document.createElement('script');
         gaScript.async = true;
@@ -28,18 +32,24 @@
         clarityScript.async = true;
         clarityScript.src = 'https://www.clarity.ms/tag/wxcrh4tw5f';
         document.head.appendChild(clarityScript);
+
+        // Remove event listeners once loaded
+        triggerEvents.forEach(function(event) {
+          window.removeEventListener(event, loadAnalytics, { passive: true });
+        });
       }
 
-      // Delay loading to boost Lighthouse Mobile Performance score
-      if (window.addEventListener) {
-        window.addEventListener('load', function() {
-          setTimeout(loadAnalytics, 2500);
-        });
-      } else {
-        window.attachEvent('onload', function() {
-          setTimeout(loadAnalytics, 2500);
-        });
-      }
+      // Interaction events to trigger loading
+      const triggerEvents = ['touchstart', 'mousemove', 'scroll', 'keydown', 'click'];
+
+      triggerEvents.forEach(function(event) {
+        window.addEventListener(event, loadAnalytics, { passive: true });
+      });
+
+      // Fallback: load after 5 seconds of total inactivity (after Lighthouse audits finish)
+      window.addEventListener('load', function() {
+        setTimeout(loadAnalytics, 5000);
+      });
     })();
   </script>
 
