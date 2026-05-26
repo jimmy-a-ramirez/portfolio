@@ -1467,8 +1467,8 @@ html[data-theme="light"] .dot-nav__tooltip {
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-md);
   color: var(--color-arctic-mist);
-  padding: var(--spacing-6) var(--spacing-12);
-  font-size: 11px;
+  padding: var(--spacing-12) var(--spacing-16);
+  font-size: 12px;
   font-weight: var(--font-weight-medium);
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
