@@ -1534,14 +1534,16 @@ html[data-theme="light"] .dot-nav__tooltip {
 /* ===== Responsive Adaptations for A11y Panel ===== */
 @media (max-width: 768px) {
   .a11y-trigger {
-    bottom: var(--spacing-16);
+    top: var(--spacing-16);
+    bottom: auto;
     left: var(--spacing-16);
     width: 40px;
     height: 40px;
   }
   
   .a11y-panel {
-    bottom: 68px;
+    top: 68px;
+    bottom: auto;
     left: var(--spacing-16);
     width: calc(100vw - 32px);
     max-width: none;
@@ -1605,5 +1607,85 @@ html.a11y-reduced-motion *::after {
 html.a11y-monochrome {
   filter: grayscale(1) contrast(1.15) !important;
 }
+
+/* ===== A11y & UX Preferences Light Theme Overrides (Modo Claro) ===== */
+html[data-theme="light"] .a11y-trigger {
+  background: rgba(232, 238, 247, 0.85);
+  border-color: rgba(10, 132, 255, 0.2);
+  color: var(--color-ghost-white);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+html[data-theme="light"] .a11y-trigger:hover {
+  background: var(--color-slate-dew);
+  box-shadow: 0 4px 18px rgba(10, 132, 255, 0.15);
+}
+
+html[data-theme="light"] .a11y-panel {
+  background: rgba(245, 247, 251, 0.92);
+  border-color: rgba(10, 132, 255, 0.15);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.08), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+html[data-theme="light"] .a11y-panel__header {
+  border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+
+html[data-theme="light"] .a11y-panel__title {
+  color: var(--color-ghost-white);
+}
+
+html[data-theme="light"] .a11y-option__label {
+  color: var(--color-comet);
+}
+
+html[data-theme="light"] .a11y-option__description {
+  color: var(--color-whisper-blue);
+}
+
+html[data-theme="light"] .a11y-btn-group__btn {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: var(--color-comet);
+}
+
+html[data-theme="light"] .a11y-btn-group__btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--color-ghost-white);
+  border-color: rgba(10, 132, 255, 0.2);
+}
+
+html[data-theme="light"] .a11y-btn-group__btn--active {
+  background: var(--color-neon-violet);
+  border-color: var(--color-neon-violet);
+  color: #ffffff !important;
+  box-shadow: 0 0 10px rgba(10, 132, 255, 0.2);
+}
+
+html[data-theme="light"] .a11y-switch {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+html[data-theme="light"] .a11y-switch[aria-checked="true"] {
+  background: var(--color-neon-violet);
+  border-color: var(--color-neon-violet);
+}
+
+html[data-theme="light"] .a11y-switch__thumb {
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+html[data-theme="light"] .a11y-close {
+  color: var(--color-whisper-blue);
+}
+
+html[data-theme="light"] .a11y-close:hover {
+  color: var(--color-neon-violet);
+}
+
 
 
