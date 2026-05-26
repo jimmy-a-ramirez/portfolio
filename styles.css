@@ -1595,6 +1595,7 @@ html.a11y-focus-highlights *:focus-visible {
 }
 
 /* 4. Reducción de movimiento (Epilepsia y trastornos vestibulares) */
+html.a11y-reduced-motion,
 html.a11y-reduced-motion *,
 html.a11y-reduced-motion *::before,
 html.a11y-reduced-motion *::after {
