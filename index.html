@@ -53,7 +53,7 @@
   <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
 
   <!-- Theme Toggle -->
-  <button id="theme-toggle" class="theme-toggle-btn" aria-label="Alternar tema claro u oscuro" title="Alternar tema de color">
+  <button id="theme-toggle" class="theme-toggle-btn" aria-label="Alternar tema claro u oscuro">
     <svg class="theme-toggle-btn__icon theme-toggle-btn__icon--sun" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -68,6 +68,7 @@
     <svg class="theme-toggle-btn__icon theme-toggle-btn__icon--moon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
     </svg>
+    <span class="theme-toggle-btn__tooltip">Cambiar tema</span>
   </button>
 
   <!-- Dot Navigation -->
@@ -323,11 +324,12 @@
       <path d="M12 8a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
       <path d="M9 13h6M12 8v8M9 20h3M12 20h3"/>
     </svg>
+    <span class="a11y-trigger__tooltip">Personalizar vista</span>
   </button>
 
   <div id="a11y-panel" class="a11y-panel" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="a11y-title">
     <div class="a11y-panel__header">
-      <h2 id="a11y-title" class="a11y-panel__title">Preferencias UX</h2>
+      <h2 id="a11y-title" class="a11y-panel__title">Personalizar vista</h2>
       <button id="a11y-close" class="a11y-close" aria-label="Cerrar panel de accesibilidad">✕</button>
     </div>
     <div class="a11y-panel__body">

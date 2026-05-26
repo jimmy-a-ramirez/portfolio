@@ -1689,5 +1689,71 @@ html[data-theme="light"] .a11y-close:hover {
   color: var(--color-neon-violet);
 }
 
+/* ===== Tooltips for Theme Toggle and A11y Button (Desktop Only) ===== */
+.theme-toggle-btn__tooltip {
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(5, 6, 15, 0.9);
+  color: var(--color-arctic-mist);
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-medium);
+  padding: var(--spacing-4) var(--spacing-12);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(10, 132, 255, 0.3);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 1002;
+}
+
+.theme-toggle-btn:hover .theme-toggle-btn__tooltip,
+.theme-toggle-btn:focus-visible .theme-toggle-btn__tooltip {
+  opacity: 1;
+}
+
+.a11y-trigger__tooltip {
+  position: absolute;
+  left: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(5, 6, 15, 0.9);
+  color: var(--color-arctic-mist);
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-medium);
+  padding: var(--spacing-4) var(--spacing-12);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(10, 132, 255, 0.3);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 1002;
+}
+
+.a11y-trigger:hover .a11y-trigger__tooltip,
+.a11y-trigger:focus-visible .a11y-trigger__tooltip {
+  opacity: 1;
+}
+
+/* Responsive Hide for Tooltips */
+@media (max-width: 1024px) {
+  .theme-toggle-btn__tooltip,
+  .a11y-trigger__tooltip {
+    display: none !important;
+  }
+}
+
+/* Light Theme Overrides for Tooltips */
+html[data-theme="light"] .theme-toggle-btn__tooltip,
+html[data-theme="light"] .a11y-trigger__tooltip {
+  background: rgba(255, 255, 255, 0.96);
+  color: #0c0d12;
+  border-color: rgba(10, 132, 255, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
 
 
