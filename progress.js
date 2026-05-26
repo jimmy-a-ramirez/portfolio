@@ -59,7 +59,9 @@
           const el = document.getElementById(id);
           if (el) {
             const top = el.getBoundingClientRect().top + window.scrollY;
-            window.scrollTo({ top, behavior: 'smooth' });
+            const isReducedMotion = document.documentElement.classList.contains('a11y-reduced-motion') || 
+                                    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            window.scrollTo({ top, behavior: isReducedMotion ? 'auto' : 'smooth' });
             this.setActive(id);
           }
         });
