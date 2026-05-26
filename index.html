@@ -316,6 +316,85 @@
     </section>
   </main>
 
+  <!-- Panel de Accesibilidad e Interacción UX (A11y) -->
+  <button id="a11y-trigger" class="a11y-trigger" aria-haspopup="dialog" aria-controls="a11y-panel" aria-expanded="false" aria-label="Preferencias de accesibilidad y diseño">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M12 8a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+      <path d="M9 13h6M12 8v8M9 20h3M12 20h3"/>
+    </svg>
+  </button>
+
+  <div id="a11y-panel" class="a11y-panel" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="a11y-title">
+    <div class="a11y-panel__header">
+      <h2 id="a11y-title" class="a11y-panel__title">Preferencias UX</h2>
+      <button id="a11y-close" class="a11y-close" aria-label="Cerrar panel de accesibilidad">✕</button>
+    </div>
+    <div class="a11y-panel__body">
+      <!-- Opción 1: Tamaño de Texto -->
+      <div class="a11y-option">
+        <span class="a11y-option__label" id="a11y-label-text">Tamaño del Texto</span>
+        <div class="a11y-btn-group" role="group" aria-labelledby="a11y-label-text">
+          <button class="a11y-btn-group__btn a11y-btn-group__btn--active" data-a11y-size="normal" aria-pressed="true">Normal</button>
+          <button class="a11y-btn-group__btn" data-a11y-size="large" aria-pressed="false">Grande</button>
+          <button class="a11y-btn-group__btn" data-a11y-size="huge" aria-pressed="false">Muy Grande</button>
+        </div>
+      </div>
+
+      <!-- Opción 2: Tipografía de alta legibilidad -->
+      <div class="a11y-option">
+        <div class="a11y-option__row">
+          <div>
+            <span class="a11y-option__label">Tipografía Legible</span>
+            <p class="a11y-option__description">Fuente limpia de alta legibilidad</p>
+          </div>
+          <button id="a11y-readable-toggle" class="a11y-switch" role="switch" aria-checked="false" aria-label="Tipografía Legible">
+            <span class="a11y-switch__thumb"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Opción 3: Resaltar Enfoque de Teclado -->
+      <div class="a11y-option">
+        <div class="a11y-option__row">
+          <div>
+            <span class="a11y-option__label">Resaltar Foco</span>
+            <p class="a11y-option__description">Bordes de alto contraste al navegar</p>
+          </div>
+          <button id="a11y-focus-toggle" class="a11y-switch" role="switch" aria-checked="false" aria-label="Resaltar enfoque de teclado">
+            <span class="a11y-switch__thumb"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Opción 4: Reducir Movimiento -->
+      <div class="a11y-option">
+        <div class="a11y-option__row">
+          <div>
+            <span class="a11y-option__label">Reducir Movimiento</span>
+            <p class="a11y-option__description">Desactiva animaciones y transiciones</p>
+          </div>
+          <button id="a11y-motion-toggle" class="a11y-switch" role="switch" aria-checked="false" aria-label="Reducir movimiento">
+            <span class="a11y-switch__thumb"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Opción 5: Contraste Monocromático -->
+      <div class="a11y-option">
+        <div class="a11y-option__row">
+          <div>
+            <span class="a11y-option__label">Contraste Monocromo</span>
+            <p class="a11y-option__description">Colores simplificados de alto contraste</p>
+          </div>
+          <button id="a11y-contrast-toggle" class="a11y-switch" role="switch" aria-checked="false" aria-label="Contraste monocromático">
+            <span class="a11y-switch__thumb"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Scripts -->
   <script src="progress.js"></script>
 </body>

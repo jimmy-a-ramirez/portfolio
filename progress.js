@@ -176,12 +176,172 @@
     }
   };
 
+  const A11y = {
+    triggerBtn: null,
+    panel: null,
+    closeBtn: null,
+    switches: {},
+    sizeBtns: [],
+    
+    settings: {
+      readable: { key: 'a11y-readable-font', class: 'a11y-readable-font', type: 'toggle' },
+      focus: { key: 'a11y-focus-highlights', class: 'a11y-focus-highlights', type: 'toggle' },
+      motion: { key: 'a11y-reduced-motion', class: 'a11y-reduced-motion', type: 'toggle' },
+      contrast: { key: 'a11y-monochrome', class: 'a11y-monochrome', type: 'toggle' },
+      size: { key: 'a11y-font-size', type: 'size' }
+    },
+
+    init() {
+      this.triggerBtn = document.getElementById('a11y-trigger');
+      this.panel = document.getElementById('a11y-panel');
+      this.closeBtn = document.getElementById('a11y-close');
+
+      if (!this.triggerBtn || !this.panel || !this.closeBtn) return;
+
+      this.sizeBtns = document.querySelectorAll('[data-a11y-size]');
+      this.switches.readable = document.getElementById('a11y-readable-toggle');
+      this.switches.focus = document.getElementById('a11y-focus-toggle');
+      this.switches.motion = document.getElementById('a11y-motion-toggle');
+      this.switches.contrast = document.getElementById('a11y-contrast-toggle');
+
+      this.loadSettings();
+      this.setupEvents();
+    },
+
+    loadSettings() {
+      Object.keys(this.settings).forEach(name => {
+        const set = this.settings[name];
+        if (set.type === 'toggle') {
+          const value = localStorage.getItem(set.key) === 'true';
+          this.setToggleState(name, value);
+        } else if (set.type === 'size') {
+          const value = localStorage.getItem(set.key) || 'normal';
+          this.setSizeState(value);
+        }
+      });
+    },
+
+    setupEvents() {
+      this.triggerBtn.addEventListener('click', () => this.togglePanel());
+      this.closeBtn.addEventListener('click', () => this.closePanel());
+
+      this.panel.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          this.closePanel();
+        }
+        
+        if (e.key === 'Tab') {
+          const focusables = this.panel.querySelectorAll('button, [role="switch"]');
+          if (focusables.length === 0) return;
+          const first = focusables[0];
+          const last = focusables[focusables.length - 1];
+
+          if (e.shiftKey) {
+            if (document.activeElement === first) {
+              e.preventDefault();
+              last.focus();
+            }
+          } else {
+            if (document.activeElement === last) {
+              e.preventDefault();
+              first.focus();
+            }
+          }
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (this.panel.classList.contains('a11y-panel--open') &&
+            !this.panel.contains(e.target) &&
+            !this.triggerBtn.contains(e.target)) {
+          this.closePanel();
+        }
+      });
+
+      this.sizeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const size = btn.dataset.a11ySize;
+          this.setSizeState(size);
+          localStorage.setItem(this.settings.size.key, size);
+        });
+      });
+
+      Object.keys(this.switches).forEach(name => {
+        const btn = this.switches[name];
+        if (btn) {
+          btn.addEventListener('click', () => {
+            const current = btn.getAttribute('aria-checked') === 'true';
+            this.setToggleState(name, !current);
+            localStorage.setItem(this.settings[name].key, (!current).toString());
+          });
+        }
+      });
+    },
+
+    togglePanel() {
+      const isOpen = this.panel.classList.contains('a11y-panel--open');
+      if (isOpen) {
+        this.closePanel();
+      } else {
+        this.panel.classList.add('a11y-panel--open');
+        this.panel.setAttribute('aria-hidden', 'false');
+        this.triggerBtn.setAttribute('aria-expanded', 'true');
+        
+        const close = this.closeBtn;
+        if (close) {
+          setTimeout(() => close.focus(), 50);
+        }
+      }
+    },
+
+    closePanel() {
+      this.panel.classList.remove('a11y-panel--open');
+      this.panel.setAttribute('aria-hidden', 'true');
+      this.triggerBtn.setAttribute('aria-expanded', 'false');
+      this.triggerBtn.focus();
+    },
+
+    setToggleState(name, active) {
+      const set = this.settings[name];
+      const btn = this.switches[name];
+
+      if (active) {
+        document.documentElement.classList.add(set.class);
+        if (btn) btn.setAttribute('aria-checked', 'true');
+      } else {
+        document.documentElement.classList.remove(set.class);
+        if (btn) btn.setAttribute('aria-checked', 'false');
+      }
+    },
+
+    setSizeState(size) {
+      document.documentElement.classList.remove('a11y-large-text', 'a11y-huge-text');
+      
+      this.sizeBtns.forEach(btn => {
+        const isActive = btn.dataset.a11ySize === size;
+        btn.setAttribute('aria-pressed', isActive.toString());
+        if (isActive) {
+          btn.classList.add('a11y-btn-group__btn--active');
+        } else {
+          btn.classList.remove('a11y-btn-group__btn--active');
+        }
+      });
+
+      if (size === 'large') {
+        document.documentElement.classList.add('a11y-large-text');
+      } else if (size === 'huge') {
+        document.documentElement.classList.add('a11y-huge-text');
+      }
+    }
+  };
+
   // Expose to window for testing environments
   if (typeof window !== 'undefined') {
     window.DotNav = DotNav;
     window.Accordion = Accordion;
     window.ScrollAnim = ScrollAnim;
     window.Theme = Theme;
+    window.A11y = A11y;
   }
 
   if (document.readyState === 'loading') {
@@ -190,11 +350,13 @@
       Accordion.init(); 
       ScrollAnim.init(); 
       Theme.init(); 
+      A11y.init();
     });
   } else {
     DotNav.init(); 
     Accordion.init(); 
     ScrollAnim.init(); 
     Theme.init();
+    A11y.init();
   }
 })();
