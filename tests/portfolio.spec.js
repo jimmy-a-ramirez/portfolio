@@ -297,4 +297,56 @@ test.describe('Expandible Case Cards', () => {
       await expect(page.locator('html')).not.toHaveClass(/a11y-cognitive-mode/);
     });
   });
+
+  // ===== UX Audit Simulator Spec Tests =====
+  test.describe('UX Audit Simulator', () => {
+    test('Requirement: Renderizado y Cálculo Inicial - score inicial es 60%', async ({ page }) => {
+      await page.goto('/');
+
+      const simulatorSection = page.locator('#simulator');
+      await expect(simulatorSection).toBeVisible();
+
+      // Verificar score inicial
+      const scoreVal = page.locator('#score-value');
+      await expect(scoreVal).toHaveText('60');
+
+      const scoreStatus = page.locator('#score-status');
+      await expect(scoreStatus).toHaveText('Oportunidad de Optimización');
+      await expect(scoreStatus).toHaveClass(/score--warn/);
+    });
+
+    test('Requirement: Interacción Dinámica - cambiar sliders actualiza score, clase y enlace cta', async ({ page }) => {
+      await page.goto('/');
+
+      // Establecer todos a 1 (Riesgo Crítico)
+      await page.locator('#sim-development').evaluate(el => { el.value = '1'; el.dispatchEvent(new Event('input')); });
+      await page.locator('#sim-adoption').evaluate(el => { el.value = '1'; el.dispatchEvent(new Event('input')); });
+      await page.locator('#sim-validation').evaluate(el => { el.value = '1'; el.dispatchEvent(new Event('input')); });
+      await page.locator('#sim-handoff').evaluate(el => { el.value = '1'; el.dispatchEvent(new Event('input')); });
+
+      const scoreVal = page.locator('#score-value');
+      await expect(scoreVal).toHaveText('20');
+
+      const scoreStatus = page.locator('#score-status');
+      await expect(scoreStatus).toHaveText('Riesgo Crítico');
+      await expect(scoreStatus).toHaveClass(/score--critical/);
+
+      // Verificar CTA Mailto dinámico
+      const ctaBtn = page.locator('#sim-cta-btn');
+      const href = await ctaBtn.getAttribute('href');
+      expect(href).toContain('mailto:jialexisrojas@gmail.com');
+      expect(href).toContain('subject=');
+      expect(href).toContain('20%');
+
+      // Establecer todos a 5 (Excelente)
+      await page.locator('#sim-development').evaluate(el => { el.value = '5'; el.dispatchEvent(new Event('input')); });
+      await page.locator('#sim-adoption').evaluate(el => { el.value = '5'; el.dispatchEvent(new Event('input')); });
+      await page.locator('#sim-validation').evaluate(el => { el.value = '5'; el.dispatchEvent(new Event('input')); });
+      await page.locator('#sim-handoff').evaluate(el => { el.value = '5'; el.dispatchEvent(new Event('input')); });
+
+      await expect(scoreVal).toHaveText('100');
+      await expect(scoreStatus).toHaveText('Salud UX Excelente');
+      await expect(scoreStatus).toHaveClass(/score--excellent/);
+    });
+  });
 });

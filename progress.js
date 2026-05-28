@@ -352,6 +352,160 @@
     }
   };
 
+  const Simulator = {
+    inputs: {},
+    badges: {},
+    scoreVal: null,
+    scoreStatus: null,
+    scoreRing: null,
+    recText: null,
+    ctaBtn: null,
+    lang: 'es',
+
+    init() {
+      // Inputs
+      this.inputs.dev = document.getElementById('sim-development');
+      this.inputs.adopt = document.getElementById('sim-adoption');
+      this.inputs.val = document.getElementById('sim-validation');
+      this.inputs.handoff = document.getElementById('sim-handoff');
+
+      // Badges
+      this.badges.dev = document.getElementById('val-development');
+      this.badges.adopt = document.getElementById('val-adoption');
+      this.badges.val = document.getElementById('val-validation');
+      this.badges.handoff = document.getElementById('val-handoff');
+
+      // Score components
+      this.scoreVal = document.getElementById('score-value');
+      this.scoreStatus = document.getElementById('score-status');
+      this.scoreRing = document.getElementById('score-ring-progress');
+      this.recText = document.getElementById('recommendation-text');
+      this.ctaBtn = document.getElementById('sim-cta-btn');
+
+      if (!this.inputs.dev || !this.scoreVal) return; // Not on page or elements missing
+
+      // Detect language from HTML
+      this.lang = document.documentElement.getAttribute('lang') || 'es';
+
+      this.setupEvents();
+      this.calculate();
+    },
+
+    setupEvents() {
+      Object.keys(this.inputs).forEach(key => {
+        const input = this.inputs[key];
+        input.addEventListener('input', () => {
+          // Update aria attribute for accessibility testing
+          input.setAttribute('aria-valuenow', input.value);
+          this.calculate();
+        });
+      });
+    },
+
+    calculate() {
+      const devVal = parseInt(this.inputs.dev.value);
+      const adoptVal = parseInt(this.inputs.adopt.value);
+      const valVal = parseInt(this.inputs.val.value);
+      const handoffVal = parseInt(this.inputs.handoff.value);
+
+      // Update Slider Label Badges in real-time
+      this.updateBadges(devVal, adoptVal, valVal, handoffVal);
+
+      // Score logic: (Sum of 4 values) * 5 (range 20 to 100)
+      const score = (devVal + adoptVal + valVal + handoffVal) * 5;
+      
+      // Update score display
+      this.scoreVal.textContent = score;
+
+      // Update radial SVG ring: 440 is the stroke-dasharray (circumference)
+      // offset = 440 - (440 * score / 100)
+      const offset = 440 - (440 * score / 100);
+      if (this.scoreRing) {
+        this.scoreRing.style.strokeDashoffset = offset;
+      }
+
+      // Update Status, Color State and Recommendation
+      this.updateDiagnosis(score);
+    },
+
+    updateBadges(dev, adopt, val, handoff) {
+      // Badges lookup tables
+      const badgesData = {
+        es: {
+          dev: { 1: 'Lento (Meses)', 2: 'Lento', 3: 'Moderado', 4: 'Rápido', 5: '1 Día (Fricción Cero)' },
+          adopt: { 1: 'Crítico (Soporte)', 2: 'Baja Adopción', 3: 'Fricción Media', 4: 'Adopción Alta', 5: 'Fricción Cero' },
+          val: { 1: 'Sin Validación', 2: 'Por Intuición', 3: 'Ocasional', 4: 'Frecuente', 5: 'Discovery Semanal' },
+          handoff: { 1: 'Reprocesos Lentos', 2: 'Baja Fiel', 3: 'Intermedio', 4: 'Handoff Limpio', 5: 'QA Diseño Automatizado' }
+        },
+        en: {
+          dev: { 1: 'Slow (Months)', 2: 'Slow', 3: 'Moderate', 4: 'Fast', 5: '1 Day (Frictionless)' },
+          adopt: { 1: 'Critical (Support)', 2: 'Low Adoption', 3: 'Moderate Friction', 4: 'High Adoption', 5: 'Zero Friction' },
+          val: { 1: 'No Validation', 2: 'By Intuition', 3: 'Occasional', 4: 'Frequent', 5: 'Weekly Discovery' },
+          handoff: { 1: 'Slow Rework', 2: 'Low Fidelity', 3: 'Intermediate', 4: 'Clean Handoff', 5: 'Automated Design QA' }
+        }
+      };
+
+      const labels = badgesData[this.lang] || badgesData.es;
+
+      if (this.badges.dev) this.badges.dev.textContent = labels.dev[dev];
+      if (this.badges.adopt) this.badges.adopt.textContent = labels.adopt[adopt];
+      if (this.badges.val) this.badges.val.textContent = labels.val[val];
+      if (this.badges.handoff) this.badges.handoff.textContent = labels.handoff[handoff];
+    },
+
+    updateDiagnosis(score) {
+      const isEs = this.lang === 'es';
+      let statusText = '';
+      let recText = '';
+      let removeClasses = ['score--critical', 'score--warn', 'score--excellent'];
+      let addClass = '';
+
+      if (score < 50) {
+        addClass = 'score--critical';
+        statusText = isEs ? 'Riesgo Crítico' : 'Critical Risk';
+        recText = isEs 
+          ? 'Tu producto está quemando recursos. Tienes una brecha grave entre la lógica de negocio y la construcción técnica. Escribir más código no solucionará la baja adopción. <strong>Recomiendo una Auditoría UX & Discovery inmediato</strong>.'
+          : 'Your product is burning cash. There is a severe gap between business logic and technical execution. Writing more code won\'t solve low adoption. <strong>I recommend an immediate UX Audit & Product Discovery</strong>.';
+      } else if (score >= 50 && score < 80) {
+        addClass = 'score--warn';
+        statusText = isEs ? 'Oportunidad de Optimización' : 'Opportunity to Optimize';
+        recText = isEs
+          ? 'Tu producto es funcional, pero pierde tracción en flujos clave. Hay un teléfono roto en el handoff técnico que causa retrasos en frontend y errores evitables. <strong>Recomiendo implementar prototipos de alta precisión y especificaciones lógicas</strong>.'
+          : 'Your product is functional, but losing traction in key flows. There\'s a breakdown in technical handoff causing frontend delays and avoidable errors. <strong>I recommend high-precision prototyping and logical specifications</strong>.';
+      } else {
+        addClass = 'score--excellent';
+        statusText = isEs ? 'Salud UX Excelente' : 'Excellent UX Health';
+        recText = isEs
+          ? '¡Excelente! Tu plataforma opera con buenas prácticas. Tu oportunidad está en automatizar flujos AI-Native y escalar tu sistema de diseño dinámico para acelerar un 10x tus tiempos. <strong>Recomiendo consultoría avanzada de workflows de diseño con IA</strong>.'
+          : 'Excellent! Your platform operates with great practices. Your opportunity lies in automating AI-Native workflows and scaling your dynamic design system to accelerate times 10x. <strong>I recommend advanced consulting on AI-Native design workflows</strong>.';
+      }
+
+      // Update Status Badge Classes
+      if (this.scoreStatus) {
+        removeClasses.forEach(cls => this.scoreStatus.classList.remove(cls));
+        this.scoreStatus.classList.add(addClass);
+        this.scoreStatus.textContent = statusText;
+      }
+
+      // Update recommendation text
+      if (this.recText) {
+        this.recText.innerHTML = recText;
+      }
+
+      // Update CTA subject line dynamic handoff
+      if (this.ctaBtn) {
+        const mailSubject = isEs 
+          ? `Diagnóstico de Salud UX [Puntuación: ${score}%]` 
+          : `UX & Product Health Diagnostic [Score: ${score}%]`;
+        const mailBody = isEs
+          ? `Hola Jimmy,\n\nHe completado el autodiagnóstico interactivo de mi producto digital en tu portafolio y he obtenido una puntuación de salud UX del ${score}% (${statusText}).\n\nMe gustaría programar una llamada de diagnóstico gratuita para hablar sobre mi producto y ver opciones de optimización.\n\nSaludos.`
+          : `Hi Jimmy,\n\nI've completed the interactive self-diagnostic tool on your portfolio and obtained a UX health score of ${score}% (${statusText}).\n\nI would love to schedule a free diagnostic call to discuss my product and see opportunities to optimize it.\n\nBest regards.`;
+        
+        this.ctaBtn.setAttribute('href', `mailto:jialexisrojas@gmail.com?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`);
+      }
+    }
+  };
+
   // Expose to window for testing environments
   if (typeof window !== 'undefined') {
     window.DotNav = DotNav;
@@ -360,6 +514,7 @@
     window.Theme = Theme;
     window.A11y = A11y;
     window.Lang = Lang;
+    window.Simulator = Simulator;
   }
 
   if (document.readyState === 'loading') {
@@ -370,6 +525,7 @@
       Theme.init(); 
       A11y.init();
       Lang.init();
+      Simulator.init();
     });
   } else {
     DotNav.init(); 
@@ -378,5 +534,6 @@
     Theme.init();
     A11y.init();
     Lang.init();
+    Simulator.init();
   }
 })();

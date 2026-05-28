@@ -1866,5 +1866,362 @@ html[data-theme="light"].a11y-cognitive-mode .a11y-kw {
   text-shadow: none;
 }
 
+/* ===== 7. UX Audit Simulator Section Styles ===== */
+.simulator__grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 32px;
+  margin-top: 40px;
+  align-items: stretch;
+}
+
+.simulator__sliders-card,
+.simulator__score-card {
+  background: rgba(13, 17, 36, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-2xl);
+  padding: 40px;
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.simulator__sliders-card:hover,
+.simulator__score-card:hover {
+  border-color: rgba(10, 132, 255, 0.15);
+  box-shadow: 0 12px 40px rgba(10, 132, 255, 0.05);
+}
+
+.simulator__card-title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-arctic-mist);
+  margin-bottom: 8px;
+}
+
+.simulator__card-intro {
+  font-size: var(--text-body);
+  color: var(--color-slate-mist);
+  margin-bottom: 32px;
+}
+
+.simulator__group {
+  margin-bottom: 28px;
+}
+
+.simulator__group:last-of-type {
+  margin-bottom: 0;
+}
+
+.simulator__slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.simulator__label {
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-arctic-mist);
+  cursor: pointer;
+}
+
+.simulator__val-badge {
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-bold);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  background: rgba(10, 132, 255, 0.1);
+  color: var(--color-comet);
+  border: 1px solid rgba(10, 132, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+/* Custom Range Slider */
+.simulator__range {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  outline: none;
+  margin: 14px 0;
+  transition: background 0.3s ease;
+}
+
+.simulator__range::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 6px;
+  cursor: pointer;
+  border-radius: var(--radius-full);
+}
+
+.simulator__range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: var(--color-comet);
+  cursor: pointer;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 10px rgba(10, 132, 255, 0.4);
+  margin-top: -7px;
+  transition: transform 0.1s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.simulator__range::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 15px rgba(10, 132, 255, 0.6);
+}
+
+.simulator__range:focus-visible::-webkit-slider-thumb {
+  outline: 2px solid var(--color-comet);
+  outline-offset: 3px;
+}
+
+/* Firefox compatibility */
+.simulator__range::-moz-range-track {
+  width: 100%;
+  height: 6px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+}
+
+.simulator__range::-moz-range-thumb {
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: var(--color-comet);
+  cursor: pointer;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 10px rgba(10, 132, 255, 0.4);
+  transition: transform 0.1s ease, background 0.3s ease;
+}
+
+.simulator__range::-moz-range-thumb:hover {
+  transform: scale(1.2);
+}
+
+.simulator__slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-caption);
+  color: var(--color-slate-mist);
+  margin-top: 4px;
+}
+
+/* Column 2: Scoreboard & Radial Progress Ring */
+.simulator__score-card {
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.simulator__score-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.score-circle {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.score-ring {
+  transform: rotate(-90deg);
+  width: 160px;
+  height: 160px;
+}
+
+.score-ring__background {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.05);
+  stroke-width: 8;
+}
+
+.score-ring__progress {
+  fill: none;
+  stroke: var(--color-neon-violet);
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 440;
+  stroke-dashoffset: 176; /* calculated dynamically in JS: 440 - (440 * score / 100) */
+  transition: stroke-dashoffset 0.4s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.4s ease;
+}
+
+.score-text {
+  position: absolute;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+#score-value {
+  font-size: 48px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-arctic-mist);
+  line-height: 1;
+}
+
+.score-percent {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-slate-mist);
+  margin-left: 2px;
+}
+
+.simulator__status-badge {
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  transition: all 0.3s ease;
+}
+
+/* Dynamically styled status colors */
+.score--critical {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.score--warn {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.score--excellent {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.simulator__recommendation {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  margin-bottom: 28px;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-body);
+  line-height: 1.6;
+  color: var(--color-slate-mist);
+  text-align: left;
+}
+
+.simulator__recommendation strong {
+  color: var(--color-comet);
+}
+
+.simulator__cta-btn {
+  width: 100%;
+  justify-content: center;
+  padding: 16px 24px;
+}
+
+/* ===== A11y Cognitive Focus Mode adjustments for Simulator ===== */
+html.a11y-cognitive-mode .simulator__recommendation p {
+  opacity: 0.45;
+  transition: opacity 0.3s ease;
+}
+
+html.a11y-cognitive-mode .simulator__recommendation p strong {
+  opacity: 1 !important;
+  color: var(--color-comet) !important;
+  text-shadow: 0 0 8px rgba(10, 132, 255, 0.25);
+}
+
+/* ===== Light Theme Overrides for Simulator ===== */
+html[data-theme="light"] .simulator__sliders-card,
+html[data-theme="light"] .simulator__score-card {
+  background: rgba(245, 247, 251, 0.94);
+  border-color: rgba(10, 132, 255, 0.12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+html[data-theme="light"] .simulator__sliders-card:hover,
+html[data-theme="light"] .simulator__score-card:hover {
+  border-color: rgba(10, 132, 255, 0.2);
+  box-shadow: 0 15px 40px rgba(10, 132, 255, 0.08);
+}
+
+html[data-theme="light"] .simulator__card-title,
+html[data-theme="light"] .simulator__label,
+html[data-theme="light"] #score-value {
+  color: #0c0d12 !important;
+}
+
+html[data-theme="light"] .simulator__card-intro,
+html[data-theme="light"] .simulator__slider-labels,
+html[data-theme="light"] .score-percent,
+html[data-theme="light"] .simulator__recommendation {
+  color: #334155 !important;
+}
+
+html[data-theme="light"] .simulator__recommendation {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+html[data-theme="light"] .simulator__recommendation strong {
+  color: #0c0d12 !important;
+}
+
+html[data-theme="light"] .score-ring__background {
+  stroke: rgba(0, 0, 0, 0.05);
+}
+
+html[data-theme="light"] .simulator__range {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+html[data-theme="light"] .simulator__range::-webkit-slider-thumb {
+  background: var(--color-neon-violet);
+  border-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+html[data-theme="light"] .simulator__range::-moz-range-thumb {
+  background: var(--color-neon-violet);
+  border-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+html[data-theme="light"].a11y-cognitive-mode .simulator__recommendation p strong {
+  color: #0c0d12 !important;
+  text-shadow: none;
+}
+
+/* ===== Responsive Breakpoint stacked layout for Simulator ===== */
+@media (max-width: 900px) {
+  .simulator__grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .simulator__sliders-card,
+  .simulator__score-card {
+    padding: 30px 24px;
+  }
+}
+
 
 

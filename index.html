@@ -135,6 +135,9 @@
     <button class="dot-nav__dot progress-indicator-item" data-section="cases" data-active="false">
       <span class="dot-nav__tooltip">Casos de Éxito</span>
     </button>
+    <button class="dot-nav__dot progress-indicator-item" data-section="simulator" data-active="false">
+      <span class="dot-nav__tooltip">Diagnóstico UX</span>
+    </button>
     <button class="dot-nav__dot progress-indicator-item" data-section="testimonials" data-active="false">
       <span class="dot-nav__tooltip">Testimonios</span>
     </button>
@@ -314,6 +317,103 @@
               </ol>
             </div>
           </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- UX Simulator Section -->
+    <section id="simulator" class="section simulator" data-section="simulator">
+      <div class="container">
+        <span class="section__tag section__tag--center animate-on-scroll">Auto-Diagnóstico UX</span>
+        <h2 class="section__title animate-on-scroll">Evalúa la salud de tu producto en tiempo real</h2>
+        
+        <div class="simulator__grid animate-on-scroll">
+          <!-- Column 1: Sliders -->
+          <div class="simulator__sliders-card">
+            <h3 class="simulator__card-title">Métricas Clave de Producto</h3>
+            <p class="simulator__card-intro">Desliza los controles para reflejar el estado actual de tu plataforma.</p>
+            
+            <div class="simulator__group">
+              <div class="simulator__slider-header">
+                <label for="sim-development" class="simulator__label">Velocidad de Lanzamiento</label>
+                <span id="val-development" class="simulator__val-badge">Moderado</span>
+              </div>
+              <input type="range" id="sim-development" class="simulator__range" min="1" max="5" value="3" aria-valuemin="1" aria-valuemax="5" aria-valuenow="3">
+              <div class="simulator__slider-labels">
+                <span>Meses (Lento)</span>
+                <span>Semanas</span>
+                <span>1 Día (Rápido)</span>
+              </div>
+            </div>
+
+            <div class="simulator__group">
+              <div class="simulator__slider-header">
+                <label for="sim-adoption" class="simulator__label">Fricción en Flujos Core</label>
+                <span id="val-adoption" class="simulator__val-badge">Fricción Media</span>
+              </div>
+              <input type="range" id="sim-adoption" class="simulator__range" min="1" max="5" value="3" aria-valuemin="1" aria-valuemax="5" aria-valuenow="3">
+              <div class="simulator__slider-labels">
+                <span>Quejas de Soporte</span>
+                <span>Fricción Media</span>
+                <span>Fricción Cero</span>
+              </div>
+            </div>
+
+            <div class="simulator__group">
+              <div class="simulator__slider-header">
+                <label for="sim-validation" class="simulator__label">Investigación con Usuarios</label>
+                <span id="val-validation" class="simulator__val-badge">Ocasional</span>
+              </div>
+              <input type="range" id="sim-validation" class="simulator__range" min="1" max="5" value="3" aria-valuemin="1" aria-valuemax="5" aria-valuenow="3">
+              <div class="simulator__slider-labels">
+                <span>Por Intuición</span>
+                <span>Ocasional</span>
+                <span>Semanal (Discovery)</span>
+              </div>
+            </div>
+
+            <div class="simulator__group">
+              <div class="simulator__slider-header">
+                <label for="sim-handoff" class="simulator__label">Alineación Diseño / Dev</label>
+                <span id="val-handoff" class="simulator__val-badge">Intermedio</span>
+              </div>
+              <input type="range" id="sim-handoff" class="simulator__range" min="1" max="5" value="3" aria-valuemin="1" aria-valuemax="5" aria-valuenow="3">
+              <div class="simulator__slider-labels">
+                <span>Reprocesos Lentos</span>
+                <span>Intermedio</span>
+                <span>Diseño QA (Limpio)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2: Score & Diagnosis -->
+          <div class="simulator__score-card">
+            <h3 class="simulator__card-title">Resultado del Autodiagnóstico</h3>
+            
+            <div class="simulator__score-container">
+              <div class="score-circle">
+                <svg class="score-ring" width="160" height="160" aria-hidden="true">
+                  <circle class="score-ring__background" cx="80" cy="80" r="70"></circle>
+                  <circle id="score-ring-progress" class="score-ring__progress" cx="80" cy="80" r="70"></circle>
+                </svg>
+                <div class="score-text">
+                  <span id="score-value">60</span>
+                  <span class="score-percent">%</span>
+                </div>
+              </div>
+              <span id="score-status" class="simulator__status-badge score--warn">Oportunidad de Optimización</span>
+            </div>
+
+            <div class="simulator__recommendation">
+              <p id="recommendation-text">
+                Tu producto es funcional, pero pierde tracción en flujos clave. Hay un teléfono roto en el handoff técnico que causa retrasos en frontend y errores evitables. <strong>Recomiendo implementar prototipos de alta precisión y especificaciones lógicas</strong>.
+              </p>
+            </div>
+
+            <a href="mailto:jialexisrojas@gmail.com" id="sim-cta-btn" class="btn btn--primary simulator__cta-btn">
+              Agendar Auditoría de Diagnóstico
+            </a>
+          </div>
         </div>
       </div>
     </section>
