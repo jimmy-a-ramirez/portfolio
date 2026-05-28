@@ -337,6 +337,19 @@
     }
   };
 
+  const Lang = {
+    init() {
+      const btn = document.querySelector('.lang-toggle-btn');
+      if (btn) {
+        btn.addEventListener('click', () => {
+          if (btn.dataset.langTarget) {
+            localStorage.setItem('preferred-lang', btn.dataset.langTarget);
+          }
+        });
+      }
+    }
+  };
+
   // Expose to window for testing environments
   if (typeof window !== 'undefined') {
     window.DotNav = DotNav;
@@ -344,6 +357,7 @@
     window.ScrollAnim = ScrollAnim;
     window.Theme = Theme;
     window.A11y = A11y;
+    window.Lang = Lang;
   }
 
   if (document.readyState === 'loading') {
@@ -353,6 +367,7 @@
       ScrollAnim.init(); 
       Theme.init(); 
       A11y.init();
+      Lang.init();
     });
   } else {
     DotNav.init(); 
@@ -360,5 +375,6 @@
     ScrollAnim.init(); 
     Theme.init();
     A11y.init();
+    Lang.init();
   }
 })();

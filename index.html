@@ -9,6 +9,24 @@
   <link rel="alternate" hreflang="es" href="https://jimmy-a-ramirez.github.io/portafolio-jimmy/" />
   <link rel="alternate" hreflang="en" href="https://jimmy-a-ramirez.github.io/portafolio-jimmy/en.html" />
 
+  <!-- Language Redirection Script (Executed instantly before render to prevent flickering) -->
+  <script>
+    (function() {
+      const savedLang = localStorage.getItem('preferred-lang');
+      if (savedLang === 'en') {
+        window.location.replace('en.html');
+      } else if (!savedLang) {
+        const browserLang = (navigator.language || navigator.userLanguage || 'es').toLowerCase();
+        if (browserLang.startsWith('en')) {
+          localStorage.setItem('preferred-lang', 'en');
+          window.location.replace('en.html');
+        } else {
+          localStorage.setItem('preferred-lang', 'es');
+        }
+      }
+    })();
+  </script>
+
   <!-- Google tag (gtag.js) & Microsoft Clarity (Lazy Loaded on User Interaction for PageSpeed Performance) -->
   <script>
     (function() {
@@ -101,7 +119,7 @@
   </button>
 
   <!-- Language Switcher -->
-  <a href="en.html" class="lang-toggle-btn" aria-label="Cambiar al idioma inglés / Switch to English">
+  <a href="en.html" class="lang-toggle-btn" data-lang-target="en" aria-label="Cambiar al idioma inglés / Switch to English">
     <span class="lang-toggle-btn__text">EN</span>
     <span class="lang-toggle-btn__tooltip">English version</span>
   </a>
