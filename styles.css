@@ -1230,7 +1230,7 @@ html[data-theme="light"] .lang-toggle-btn {
 
 html[data-theme="light"] .lang-toggle-btn:hover {
   background: var(--color-slate-dew);
-  color: var(--color-midnight-abyss);
+  color: var(--color-ghost-white);
   box-shadow: 0 4px 18px rgba(10, 132, 255, 0.15);
 }
 
@@ -1774,9 +1774,9 @@ html[data-theme="light"] .a11y-close:hover {
 .theme-toggle-btn__tooltip,
 .lang-toggle-btn__tooltip {
   position: absolute;
-  right: calc(100% + 12px);
-  top: 50%;
-  transform: translateY(-50%);
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
   background: rgba(5, 6, 15, 0.9);
   color: var(--color-arctic-mist);
   font-size: var(--text-caption);
