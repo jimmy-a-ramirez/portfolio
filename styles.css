@@ -1775,8 +1775,7 @@ html[data-theme="light"] .a11y-close:hover {
 .lang-toggle-btn__tooltip {
   position: absolute;
   top: calc(100% + 10px);
-  left: 50%;
-  transform: translateX(-50%);
+  right: 0;
   background: rgba(5, 6, 15, 0.9);
   color: var(--color-arctic-mist);
   font-size: var(--text-caption);
