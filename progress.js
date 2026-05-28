@@ -190,6 +190,7 @@
       focus: { key: 'a11y-focus-highlights', class: 'a11y-focus-highlights', type: 'toggle' },
       motion: { key: 'a11y-reduced-motion', class: 'a11y-reduced-motion', type: 'toggle' },
       contrast: { key: 'a11y-monochrome', class: 'a11y-monochrome', type: 'toggle' },
+      cognitive: { key: 'a11y-cognitive-mode', class: 'a11y-cognitive-mode', type: 'toggle' },
       size: { key: 'a11y-font-size', type: 'size' }
     },
 
@@ -205,6 +206,7 @@
       this.switches.focus = document.getElementById('a11y-focus-toggle');
       this.switches.motion = document.getElementById('a11y-motion-toggle');
       this.switches.contrast = document.getElementById('a11y-contrast-toggle');
+      this.switches.cognitive = document.getElementById('a11y-cognitive-toggle');
 
       this.loadSettings();
       this.setupEvents();

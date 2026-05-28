@@ -266,4 +266,35 @@ test.describe('Expandible Case Cards', () => {
       await expect(alternateEn).toHaveAttribute('href', /portafolio-jimmy\/en\.html$/);
     });
   });
+
+  // ===== Cognitive Focus Mode Spec Tests =====
+  test.describe('A11y Panel - Cognitive Focus Mode', () => {
+    test('Requirement: Conmutador Foco Cognitivo - click updates state, html class and localStorage', async ({ page }) => {
+      await page.goto('/');
+      
+      // Abrir panel de accesibilidad
+      const triggerBtn = page.locator('#a11y-trigger');
+      await triggerBtn.click();
+      
+      const cognitiveBtn = page.locator('#a11y-cognitive-toggle');
+      await expect(cognitiveBtn).toBeVisible();
+      await expect(cognitiveBtn).toHaveAttribute('aria-checked', 'false');
+      
+      // Activar modo
+      await cognitiveBtn.click();
+      await expect(cognitiveBtn).toHaveAttribute('aria-checked', 'true');
+      await expect(page.locator('html')).toHaveClass(/a11y-cognitive-mode/);
+      
+      // Validar persistencia tras recarga
+      await page.reload();
+      await page.locator('#a11y-trigger').click();
+      await expect(page.locator('#a11y-cognitive-toggle')).toHaveAttribute('aria-checked', 'true');
+      await expect(page.locator('html')).toHaveClass(/a11y-cognitive-mode/);
+      
+      // Desactivar modo
+      await page.locator('#a11y-cognitive-toggle').click();
+      await expect(page.locator('#a11y-cognitive-toggle')).toHaveAttribute('aria-checked', 'false');
+      await expect(page.locator('html')).not.toHaveClass(/a11y-cognitive-mode/);
+    });
+  });
 });

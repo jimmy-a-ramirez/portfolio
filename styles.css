@@ -1840,5 +1840,31 @@ html[data-theme="light"] .a11y-trigger__tooltip {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
+/* 6. Modo Foco Cognitivo (Lectura Fácil) */
+html.a11y-cognitive-mode p,
+html.a11y-cognitive-mode li,
+html.a11y-cognitive-mode .case-card__content p {
+  opacity: 0.45;
+  transition: opacity 0.3s ease;
+}
+
+html.a11y-cognitive-mode p strong,
+html.a11y-cognitive-mode li strong,
+html.a11y-cognitive-mode .a11y-kw {
+  opacity: 1 !important;
+  color: var(--color-comet) !important;
+  text-shadow: 0 0 8px rgba(10, 132, 255, 0.25);
+  font-weight: var(--font-weight-bold);
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+/* Light Theme Overrides */
+html[data-theme="light"].a11y-cognitive-mode p strong,
+html[data-theme="light"].a11y-cognitive-mode li strong,
+html[data-theme="light"].a11y-cognitive-mode .a11y-kw {
+  color: #0c0d12 !important;
+  text-shadow: none;
+}
+
 
 
