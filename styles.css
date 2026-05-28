@@ -1887,6 +1887,8 @@ html[data-theme="light"].a11y-cognitive-mode .a11y-kw {
   display: flex;
   flex-direction: column;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .simulator__sliders-card:hover,
@@ -1951,6 +1953,9 @@ html[data-theme="light"].a11y-cognitive-mode .a11y-kw {
   outline: none;
   margin: 14px 0;
   transition: background 0.3s ease;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .simulator__range::-webkit-slider-runnable-track {
@@ -2008,11 +2013,29 @@ html[data-theme="light"].a11y-cognitive-mode .a11y-kw {
 }
 
 .simulator__slider-labels {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
   font-size: var(--text-caption);
   color: var(--color-slate-mist);
   margin-top: 4px;
+  width: 100%;
+  opacity: 0.55;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+}
+
+.simulator__slider-labels span:nth-child(1) {
+  text-align: left;
+}
+
+.simulator__slider-labels span:nth-child(2) {
+  text-align: center;
+}
+
+.simulator__slider-labels span:nth-child(3) {
+  text-align: right;
 }
 
 /* Column 2: Scoreboard & Radial Progress Ring */
