@@ -228,4 +228,42 @@ test.describe('Expandible Case Cards', () => {
       expect(currentTheme).toBe(initialTheme);
     });
   });
+
+  // ===== Bilingual Language Switcher Spec Tests =====
+  test.describe('Bilingual Language Switcher', () => {
+    test('Requirement: Language Switcher Navigation - switches correctly between Spanish and English', async ({ page }) => {
+      // 1. Iniciar en la página principal (español)
+      await page.goto('/');
+      await expect(page.locator('html')).toHaveAttribute('lang', 'es');
+      await expect(page.locator('.hero__title')).toContainText('De la incertidumbre a la arquitectura lógica');
+
+      // 2. Localizar y dar clic al conmutador (EN)
+      const langToggle = page.locator('.lang-toggle-btn');
+      await expect(langToggle).toBeVisible();
+      await expect(langToggle).toContainText('EN');
+      
+      // Ir a la versión en inglés
+      await langToggle.click();
+      await expect(page).toHaveURL(/\/en(\.html)?$/);
+
+      // 3. Validar contenido en inglés
+      await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+      await expect(page.locator('.hero__title')).toContainText('From uncertainty to logical architecture');
+
+      // 4. Volver a la versión en español
+      const esToggle = page.locator('.lang-toggle-btn');
+      await expect(esToggle).toContainText('ES');
+      await esToggle.click();
+      await expect(page.locator('html')).toHaveAttribute('lang', 'es');
+    });
+
+    test('Requirement: SEO Multi-language Alternate Links - hreflang links render correctly', async ({ page }) => {
+      await page.goto('/');
+      const alternateEs = page.locator('link[rel="alternate"][hreflang="es"]');
+      const alternateEn = page.locator('link[rel="alternate"][hreflang="en"]');
+
+      await expect(alternateEs).toHaveAttribute('href', /portafolio-jimmy\/?$/);
+      await expect(alternateEn).toHaveAttribute('href', /portafolio-jimmy\/en\.html$/);
+    });
+  });
 });

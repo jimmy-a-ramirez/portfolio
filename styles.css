@@ -1170,6 +1170,70 @@ body {
   box-shadow: 0 0 14px rgba(10, 132, 255, 0.5);
 }
 
+/* ===== Language Toggle Button (Premium Design) ===== */
+.lang-toggle-btn {
+  position: fixed;
+  top: var(--spacing-24);
+  right: 80px; /* Separación perfecta de 12px con el botón de tema (24px + 44px + 12px) */
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--color-storm-gray);
+  border: 1px solid var(--color-system-highlight-border);
+  color: var(--color-ghost-white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  font-family: var(--font-untitled-sans);
+  font-size: 13px;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.5px;
+  transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lang-toggle-btn:hover {
+  background: var(--color-slate-dew);
+  transform: scale(1.08);
+  box-shadow: var(--shadow-md);
+  color: var(--color-ghost-white);
+}
+
+.lang-toggle-btn:active {
+  transform: scale(0.92);
+}
+
+.lang-toggle-btn:focus-visible {
+  outline: 2px solid var(--color-neon-violet);
+  outline-offset: 4px;
+  box-shadow: 0 0 14px rgba(10, 132, 255, 0.5);
+}
+
+.lang-toggle-btn__text {
+  position: relative;
+  top: 1px;
+}
+
+/* Light Theme Overrides for Language Toggle */
+html[data-theme="light"] .lang-toggle-btn {
+  background: rgba(232, 238, 247, 0.85);
+  border-color: rgba(10, 132, 255, 0.2);
+  color: #0c0d12;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+html[data-theme="light"] .lang-toggle-btn:hover {
+  background: var(--color-slate-dew);
+  color: var(--color-midnight-abyss);
+  box-shadow: 0 4px 18px rgba(10, 132, 255, 0.15);
+}
+
 /* Micro-animaciones para iconos SVG */
 .theme-toggle-btn__icon {
   position: absolute;
@@ -1313,6 +1377,14 @@ html[data-theme="light"] .dot-nav__tooltip {
     right: var(--spacing-16);
     width: 40px;
     height: 40px;
+  }
+
+  .lang-toggle-btn {
+    top: var(--spacing-16);
+    right: 64px; /* Deja los 40px del botón de tema (16px right) + 8px de separación */
+    width: 40px;
+    height: 40px;
+    font-size: 12px;
   }
 }
 
@@ -1698,8 +1770,9 @@ html[data-theme="light"] .a11y-close:hover {
   color: var(--color-neon-violet);
 }
 
-/* ===== Tooltips for Theme Toggle and A11y Button (Desktop Only) ===== */
-.theme-toggle-btn__tooltip {
+/* ===== Tooltips for Theme Toggle, Lang Toggle, and A11y Button (Desktop Only) ===== */
+.theme-toggle-btn__tooltip,
+.lang-toggle-btn__tooltip {
   position: absolute;
   right: calc(100% + 12px);
   top: 50%;
@@ -1719,7 +1792,9 @@ html[data-theme="light"] .a11y-close:hover {
 }
 
 .theme-toggle-btn:hover .theme-toggle-btn__tooltip,
-.theme-toggle-btn:focus-visible .theme-toggle-btn__tooltip {
+.theme-toggle-btn:focus-visible .theme-toggle-btn__tooltip,
+.lang-toggle-btn:hover .lang-toggle-btn__tooltip,
+.lang-toggle-btn:focus-visible .lang-toggle-btn__tooltip {
   opacity: 1;
 }
 
@@ -1750,6 +1825,7 @@ html[data-theme="light"] .a11y-close:hover {
 /* Responsive Hide for Tooltips */
 @media (max-width: 1024px) {
   .theme-toggle-btn__tooltip,
+  .lang-toggle-btn__tooltip,
   .a11y-trigger__tooltip {
     display: none !important;
   }
@@ -1757,6 +1833,7 @@ html[data-theme="light"] .a11y-close:hover {
 
 /* Light Theme Overrides for Tooltips */
 html[data-theme="light"] .theme-toggle-btn__tooltip,
+html[data-theme="light"] .lang-toggle-btn__tooltip,
 html[data-theme="light"] .a11y-trigger__tooltip {
   background: rgba(255, 255, 255, 0.96);
   color: #0c0d12;
