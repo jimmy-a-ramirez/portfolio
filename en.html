@@ -14,7 +14,7 @@
     (function() {
       const savedLang = localStorage.getItem('preferred-lang');
       if (savedLang === 'es') {
-        window.location.replace('index.html');
+        window.location.replace('index.html' + window.location.hash);
       } else if (!savedLang) {
         localStorage.setItem('preferred-lang', 'en');
       }

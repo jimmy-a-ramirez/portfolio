@@ -244,7 +244,7 @@ test.describe('Expandible Case Cards', () => {
       
       // Ir a la versión en inglés
       await langToggle.click();
-      await expect(page).toHaveURL(/\/en(\.html)?$/);
+      await expect(page).toHaveURL(/\/en(\.html)?(#hero)?$/);
 
       // 3. Validar contenido en inglés
       await expect(page.locator('html')).toHaveAttribute('lang', 'en');
@@ -254,6 +254,38 @@ test.describe('Expandible Case Cards', () => {
       const esToggle = page.locator('.lang-toggle-btn');
       await expect(esToggle).toContainText('ES');
       await esToggle.click();
+      await expect(page.locator('html')).toHaveAttribute('lang', 'es');
+    });
+
+    test('Requirement: Anchor Preservation UX - language switcher preserves current active section anchor', async ({ page }) => {
+      await page.goto('/');
+      
+      // Scroll to simulator section to activate it
+      await page.locator('#simulator').scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+      
+      // Ensure simulator is the active section
+      const activeDot = page.locator('.progress-indicator-item[data-active="true"]');
+      await expect(activeDot).toHaveAttribute('data-section', 'simulator');
+      
+      // Click language toggle to go to English
+      const langToggle = page.locator('.lang-toggle-btn');
+      await langToggle.click();
+      
+      // URL should have #simulator hash
+      await expect(page).toHaveURL(/en(\.html)?#simulator$/);
+      await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+      
+      // Scroll to testimonials to activate it in English
+      await page.locator('#testimonials').scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+      
+      // Click language toggle to go back to Spanish
+      const esToggle = page.locator('.lang-toggle-btn');
+      await esToggle.click();
+      
+      // URL should have #testimonials hash
+      await expect(page).toHaveURL(/(index\.html)?#testimonials$/);
       await expect(page.locator('html')).toHaveAttribute('lang', 'es');
     });
 

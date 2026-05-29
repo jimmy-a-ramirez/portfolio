@@ -347,6 +347,14 @@
           if (btn.dataset.langTarget) {
             localStorage.setItem('preferred-lang', btn.dataset.langTarget);
           }
+          
+          // Get the currently active section ID from DotNav indicators
+          const activeDot = document.querySelector('.progress-indicator-item[data-active="true"]');
+          const activeSectionId = activeDot ? activeDot.dataset.section : 'hero';
+          
+          // Append active section hash to target redirect URL
+          const targetPage = btn.getAttribute('href').split('#')[0];
+          btn.setAttribute('href', `${targetPage}#${activeSectionId}`);
         });
       }
     }
