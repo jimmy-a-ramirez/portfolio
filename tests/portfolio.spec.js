@@ -276,16 +276,19 @@ test.describe('Expandible Case Cards', () => {
       await expect(page).toHaveURL(/en(\.html)?#simulator$/);
       await expect(page.locator('html')).toHaveAttribute('lang', 'en');
       
-      // Scroll to testimonials to activate it in English
-      await page.locator('#testimonials').scrollIntoViewIfNeeded();
-      await page.waitForTimeout(300);
+      // Wait for page-load smooth scroll animation to finish settling
+      await page.waitForTimeout(1200);
+      
+      // Scroll to services to activate it in English
+      await page.locator('#services').scrollIntoViewIfNeeded();
+      await page.waitForTimeout(500);
       
       // Click language toggle to go back to Spanish
       const esToggle = page.locator('.lang-toggle-btn');
       await esToggle.click();
       
-      // URL should have #testimonials hash
-      await expect(page).toHaveURL(/(index\.html)?#testimonials$/);
+      // URL should have #services hash
+      await expect(page).toHaveURL(/(index\.html)?#services$/);
       await expect(page.locator('html')).toHaveAttribute('lang', 'es');
     });
 
