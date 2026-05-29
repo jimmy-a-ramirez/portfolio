@@ -339,6 +339,37 @@
     }
   };
 
+  const ScrollOnLoad = {
+    init() {
+      const hash = window.location.hash;
+      if (hash) {
+        const el = document.querySelector(hash);
+        if (el) {
+          const originalId = el.id;
+          el.id = '';
+          window.scrollTo(0, 0);
+
+          const doScroll = () => {
+            setTimeout(() => {
+              el.id = originalId;
+              const top = el.getBoundingClientRect().top + window.scrollY;
+              const isReducedMotion = document.documentElement.classList.contains('a11y-reduced-motion') || 
+                                      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+              
+              window.scrollTo({ top, behavior: isReducedMotion ? 'auto' : 'smooth' });
+            }, 300);
+          };
+
+          if (document.readyState === 'complete') {
+            doScroll();
+          } else {
+            window.addEventListener('load', doScroll);
+          }
+        }
+      }
+    }
+  };
+
   const Lang = {
     init() {
       const btn = document.querySelector('.lang-toggle-btn');
@@ -523,10 +554,12 @@
     window.A11y = A11y;
     window.Lang = Lang;
     window.Simulator = Simulator;
+    window.ScrollOnLoad = ScrollOnLoad;
   }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => { 
+      ScrollOnLoad.init();
       DotNav.init(); 
       Accordion.init(); 
       ScrollAnim.init(); 
@@ -536,6 +569,7 @@
       Simulator.init();
     });
   } else {
+    ScrollOnLoad.init();
     DotNav.init(); 
     Accordion.init(); 
     ScrollAnim.init(); 
